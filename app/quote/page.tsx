@@ -1,8 +1,8 @@
 "use client"
 
 import { useSearchParams } from "next/navigation"
-import { Suspense, useRef, useEffect } from "react"
-import { useFormState, useFormStatus } from "react-dom"
+import { Suspense, useRef, useEffect, useActionState } from "react"
+import { useFormStatus } from "react-dom"
 import { submitQuoteRequest } from "@/actions/quote"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -31,9 +31,7 @@ function QuoteForm() {
     const maxQuantity = limit ? parseInt(limit) : undefined
     const isLimited = !!limit
 
-
-
-    const [state, formAction] = useFormState(submitQuoteRequest, initialState)
+    const [state, formAction] = useActionState(submitQuoteRequest, initialState)
     const formRef = useRef<HTMLFormElement>(null)
 
     useEffect(() => {

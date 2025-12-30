@@ -43,9 +43,7 @@ export default async function MotorsPage({ searchParams }: { searchParams: Promi
                             <ProductCard key={motor.id} {...motor} />
                         ))}
                     </div>
-                    <div className="mt-12 flex justify-center">
-                        <Button variant="outline" size="lg">Load More Motors</Button>
-                    </div>
+
                 </div>
             </div>
         </div>

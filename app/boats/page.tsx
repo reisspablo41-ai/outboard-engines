@@ -43,9 +43,7 @@ export default async function BoatsPage({ searchParams }: { searchParams: Promis
                         ))}
                     </div>
                     {/* Pagination or Load More could go here */}
-                    <div className="mt-12 flex justify-center">
-                        <Button variant="outline" size="lg">Load More Boats</Button>
-                    </div>
+
                 </div>
             </div>
         </div>

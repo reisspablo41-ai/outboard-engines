@@ -36,11 +36,7 @@ export default async function PropellersPage() {
                             <p className="col-span-3 text-center text-muted-foreground py-12">No propellers found.</p>
                         )}
                     </div>
-                    {propellers.length > 0 && (
-                        <div className="mt-12 flex justify-center">
-                            <Button variant="outline" size="lg">Load More Propellers</Button>
-                        </div>
-                    )}
+
                 </div>
             </div>
         </div>

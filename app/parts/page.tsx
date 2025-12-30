@@ -32,9 +32,7 @@ export default async function PartsPage() {
                             <ProductCard key={part.id} {...part} />
                         ))}
                     </div>
-                    <div className="mt-12 flex justify-center">
-                        <Button variant="outline" size="lg">Load More Parts</Button>
-                    </div>
+
                 </div>
             </div>
         </div>

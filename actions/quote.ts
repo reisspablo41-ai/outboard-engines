@@ -18,7 +18,7 @@ export async function submitQuoteRequest(prevState: any, formData: FormData) {
 
     try {
         // 1. Send Email to Admin
-        await resend.emails.send({
+        const adminResponse = await resend.emails.send({
             from: 'Outboards Quotes <onboarding@resend.dev>',
             to: ['support@boatsoutboardmotorsandpartsforsale.com'],
             subject: `New Quote Request: ${productName}`,
@@ -42,8 +42,14 @@ ${message || 'No additional message.'}
             replyTo: email
         });
 
+        if (adminResponse.error) {
+            console.error("❌ [Quote] Admin Email Failed:", adminResponse.error);
+        } else {
+            console.log("✅ [Quote] Admin Email Sent:", adminResponse.data);
+        }
+
         // 2. Send Confirmation to User
-        await resend.emails.send({
+        const userResponse = await resend.emails.send({
             from: 'Outboards Sales <onboarding@resend.dev>',
             to: [email],
             subject: `Quote Request Received: ${productName}`,
@@ -65,10 +71,16 @@ Outboards Sales Team
             `
         });
 
+        if (userResponse.error) {
+            console.error("❌ [Quote] User Email Failed:", userResponse.error);
+        } else {
+            console.log("✅ [Quote] User Email Sent:", userResponse.data);
+        }
+
         return { success: true, message: "Quote request sent successfully!" };
 
     } catch (e) {
-        console.error("Quote Error:", e);
+        console.error("❌ [Quote] Critical Error:", e);
         return { success: false, message: "Failed to send quote request." };
     }
 }

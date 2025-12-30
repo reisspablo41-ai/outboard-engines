@@ -1,9 +1,9 @@
 "use client"
 
 import { Mail, MapPin, Phone, Clock, Send } from "lucide-react"
-import { useFormState } from "react-dom"
+import { useFormStatus } from "react-dom"
+import { useEffect, useRef, useActionState } from "react"
 import { submitContactForm } from "@/actions/contact"
-import { useEffect, useRef } from "react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -21,7 +21,7 @@ const initialState: ContactState = {
 }
 
 export default function ContactPage() {
-    const [state, formAction] = useFormState(submitContactForm, initialState)
+    const [state, formAction] = useActionState(submitContactForm, initialState)
     const formRef = useRef<HTMLFormElement>(null)
 
     useEffect(() => {
