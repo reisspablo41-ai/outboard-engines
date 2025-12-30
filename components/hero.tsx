@@ -23,12 +23,14 @@ export function Hero() {
                         Get back on the water faster with our fitment guarantee.
                     </p>
                     <div className="flex flex-wrap gap-4 pt-4">
-                        <Button size="lg" className="bg-white text-primary hover:bg-gray-100 font-bold">
-                            Shop Boats
+                        <Button asChild size="lg" className="bg-white text-primary hover:bg-gray-100 font-bold">
+                            <Link href="/boats">Shop Boats</Link>
                         </Button>
-                        <Button size="lg" variant="outline" className="text-white border-white hover:bg-white/10">
-                            Shop Motors
-                            <ArrowRight className="ml-2 size-4" />
+                        <Button asChild size="lg" className="bg-white text-gray-900 hover:bg-gray-100 font-bold border-none">
+                            <Link href="/motors">
+                                Shop Motors
+                                <ArrowRight className="ml-2 size-4" />
+                            </Link>
                         </Button>
                     </div>
                 </div>

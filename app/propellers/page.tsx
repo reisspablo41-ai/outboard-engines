@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { getProducts } from "@/lib/api/products"
 
 export default async function PropellersPage() {
-    const propellers = await getProducts('propeller')
+    const propellers = await getProducts('prop')
 
     return (
         <div className="container mx-auto px-4 py-8">

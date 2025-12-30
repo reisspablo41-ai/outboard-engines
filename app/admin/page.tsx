@@ -1,7 +1,32 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { DollarSign, Package, ShoppingCart, Users } from "lucide-react"
 
-export default function AdminDashboard() {
+import { createClient } from "@/lib/supabase/server"
+
+export default async function AdminDashboard() {
+    const supabase = await createClient()
+
+    // Fetch stats
+    const { count: orderCount } = await supabase
+        .from('orders')
+        .select('*', { count: 'exact', head: true })
+
+    const { data: revenueData } = await supabase
+        .from('orders')
+        .select('total')
+
+    const totalRevenue = revenueData?.reduce((acc, order) => acc + (Number(order.total) || 0), 0) || 0
+
+    const { count: productCount } = await supabase
+        .from('products')
+        .select('*', { count: 'exact', head: true })
+
+    const { data: recentOrders } = await supabase
+        .from('orders')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(5)
+
     return (
         <div className="space-y-8">
             <div>
@@ -16,8 +41,8 @@ export default function AdminDashboard() {
                         <DollarSign className="h-4 w-4 text-muted-foreground" />
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">$45,231.89</div>
-                        <p className="text-xs text-muted-foreground">+20.1% from last month</p>
+                        <div className="text-2xl font-bold">${totalRevenue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+                        <p className="text-xs text-muted-foreground">Lifetime revenue</p>
                     </CardContent>
                 </Card>
                 <Card>
@@ -26,8 +51,8 @@ export default function AdminDashboard() {
                         <ShoppingCart className="h-4 w-4 text-muted-foreground" />
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">+573</div>
-                        <p className="text-xs text-muted-foreground">+201 since last hour</p>
+                        <div className="text-2xl font-bold">{orderCount || 0}</div>
+                        <p className="text-xs text-muted-foreground">Total orders</p>
                     </CardContent>
                 </Card>
                 <Card>
@@ -36,8 +61,8 @@ export default function AdminDashboard() {
                         <Package className="h-4 w-4 text-muted-foreground" />
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">128</div>
-                        <p className="text-xs text-muted-foreground">+4 new this week</p>
+                        <div className="text-2xl font-bold">{productCount || 0}</div>
+                        <p className="text-xs text-muted-foreground">Active products</p>
                     </CardContent>
                 </Card>
                 <Card>
@@ -46,8 +71,8 @@ export default function AdminDashboard() {
                         <Users className="h-4 w-4 text-muted-foreground" />
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">+2350</div>
-                        <p className="text-xs text-muted-foreground">+180 since last hour</p>
+                        <div className="text-2xl font-bold">-</div>
+                        <p className="text-xs text-muted-foreground">Analytics pending</p>
                     </CardContent>
                 </Card>
             </div>
@@ -58,7 +83,24 @@ export default function AdminDashboard() {
                         <CardTitle>Recent Sales</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <p className="text-sm text-muted-foreground">No recent sales data available.</p>
+                        {recentOrders && recentOrders.length > 0 ? (
+                            <div className="space-y-4">
+                                {recentOrders.map((order) => (
+                                    <div key={order.id} className="flex items-center justify-between border-b pb-2 last:border-0 last:pb-0">
+                                        <div className="space-y-1">
+                                            <p className="text-sm font-medium leading-none">{order.full_name}</p>
+                                            <p className="text-xs text-muted-foreground">{order.email}</p>
+                                        </div>
+                                        <div className="text-right">
+                                            <p className="text-sm font-medium">+${Number(order.total).toFixed(2)}</p>
+                                            <p className="text-xs text-muted-foreground">{new Date(order.created_at).toLocaleDateString()}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <p className="text-sm text-muted-foreground">No recent sales data available.</p>
+                        )}
                     </CardContent>
                 </Card>
                 <Card className="col-span-3">
@@ -66,21 +108,7 @@ export default function AdminDashboard() {
                         <CardTitle>Recent Activity</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div className="space-y-4">
-                            <div className="flex items-center">
-                                <div className="ml-4 space-y-1">
-                                    <p className="text-sm font-medium leading-none">New order #1024</p>
-                                    <p className="text-xs text-muted-foreground">Just now</p>
-                                </div>
-                                <div className="ml-auto font-medium">+$249.00</div>
-                            </div>
-                            <div className="flex items-center">
-                                <div className="ml-4 space-y-1">
-                                    <p className="text-sm font-medium leading-none">New user registered</p>
-                                    <p className="text-xs text-muted-foreground">2 minutes ago</p>
-                                </div>
-                            </div>
-                        </div>
+                        <p className="text-sm text-muted-foreground">Activity logs coming soon.</p>
                     </CardContent>
                 </Card>
             </div>

@@ -1,10 +1,20 @@
 import { FilterSidebar } from "@/components/filter-sidebar"
 import { ProductCard } from "@/components/product-card"
 import { Button } from "@/components/ui/button"
-import { getProducts, getCategories } from "@/lib/api/products"
+import { searchProducts, getCategories } from "@/lib/api/products"
 
-export default async function MotorsPage() {
-    const motors = await getProducts('motor')
+export default async function MotorsPage({ searchParams }: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
+    const resolvedParams = await searchParams
+
+    // Parse filters
+    const filters = {
+        type: 'motor',
+        make: resolvedParams.make as string,
+        minPrice: resolvedParams.minPrice ? Number(resolvedParams.minPrice) : undefined,
+        maxPrice: resolvedParams.maxPrice ? Number(resolvedParams.maxPrice) : undefined
+    }
+
+    const motors = await searchProducts(filters)
     const categories = await getCategories()
 
     return (

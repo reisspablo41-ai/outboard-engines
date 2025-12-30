@@ -67,8 +67,10 @@ export default async function BoatPDP({ params }: { params: Promise<{ slug: stri
                     <Separator />
 
                     <div className="flex flex-col gap-4">
-                        <Button size="lg" className="w-full text-lg h-12">
-                            Request a Quote
+                        <Button size="lg" className="w-full text-lg h-12" asChild>
+                            <Link href={`/quote?product=${encodeURIComponent(product.title)}&sku=${product.sku || ''}&limit=1`}>
+                                Request a Quote
+                            </Link>
                         </Button>
                         <Button size="lg" variant="outline" className="w-full text-lg h-12">
                             <Phone className="mr-2 size-4" />

@@ -100,6 +100,10 @@ export async function getFeaturedProducts(): Promise<Product[]> {
     // Combine and map
     const rawItems = [...(nitroBoats || []), ...(motors || [])]
 
+    if (!nitroBoats || !motors) {
+        console.error("Error fetching featured products. Nitro:", nitroBoats, "Motors:", motors)
+    }
+
     return rawItems.map((item: any) => ({
         id: item.id,
         title: item.name,
@@ -279,6 +283,8 @@ export interface ProductFilter {
     year?: string
     make?: string
     model?: string
+    minPrice?: number
+    maxPrice?: number
 }
 
 export async function getFilterOptions() {
@@ -352,13 +358,17 @@ export async function searchProducts(filters: ProductFilter): Promise<Product[]>
         query = query.in('id', productIds)
     }
 
-    // Apply Brand Filter for Boats/Motors (Direct attribute) if NOT searching compatibility
+    // Apply Brand Filter
     if (filters.make && !['part', 'prop'].includes(filters.type?.toLowerCase() || '')) {
-        // We need to filter by the joined brand name, but Supabase syntax for this is tricky on simple select.
-        // Instead, we can search the name or try to filter by brand_id if we fetch it.
-        // Simpler: Search name ILIKE '%Make%' as fallback or if possible use !inner join.
-        // Let's try to match brand via name search for now as checking brand_id requires another lookup.
         query = query.ilike('name', `%${filters.make}%`)
+    }
+
+    // Apply Price Filter
+    if (filters.minPrice !== undefined) {
+        query = query.gte('price', filters.minPrice)
+    }
+    if (filters.maxPrice !== undefined) {
+        query = query.lte('price', filters.maxPrice)
     }
 
     const { data, error } = await query.order('created_at', { ascending: false })

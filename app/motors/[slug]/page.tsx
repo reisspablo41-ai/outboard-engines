@@ -63,12 +63,11 @@ export default async function MotorPDP({ params }: { params: Promise<{ slug: str
                     <Separator />
 
                     <div className="flex flex-col gap-4">
-                        <Button size="lg" className="w-full text-lg h-12 gap-2">
-                            <ShoppingCart className="size-5" />
-                            Add to Cart
-                        </Button>
-                        <Button size="lg" variant="outline" className="w-full text-lg h-12">
-                            Request Installation Quote
+                        <Button size="lg" className="w-full text-lg h-12 gap-2" asChild>
+                            <Link href={`/quote?product=${encodeURIComponent(product.title)}&sku=${product.sku || ''}`}>
+                                <Truck className="size-5" />
+                                Request Quote
+                            </Link>
                         </Button>
                     </div>
 

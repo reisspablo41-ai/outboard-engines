@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { Phone, MessageSquare } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
@@ -13,13 +14,11 @@ export function ExpertCTA() {
                     Our certified marine technicians are standing by to help you find the exact part or motor for your vessel.
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <Button size="lg" variant="accent" className="bg-accent text-white hover:bg-accent/90 w-full sm:w-auto text-lg px-8 py-6 h-auto">
-                        <Phone className="mr-2 size-5" />
-                        Talk to an Expert
-                    </Button>
-                    <Button size="lg" variant="outline" className="text-white border-white hover:bg-white/10 w-full sm:w-auto text-lg px-8 py-6 h-auto">
-                        <MessageSquare className="mr-2 size-5" />
-                        Chat on WhatsApp
+                    <Button asChild size="lg" className="bg-accent text-white hover:bg-accent/90 w-full sm:w-auto text-lg px-8 py-6 h-auto">
+                        <Link href="/contact">
+                            <Phone className="mr-2 size-5" />
+                            Talk to an Expert
+                        </Link>
                     </Button>
                 </div>
             </div>

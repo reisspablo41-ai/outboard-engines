@@ -1,9 +1,4 @@
-import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-} from "@/components/ui/accordion" /* Need to create Accordion component */
+/* Accordion imports removed as we are using native details/summary for now */
 
 /* Inline Accordion for now since I don't have the shadcn one created yet. Actually, good opportunity to create it. I'll make the component file next. 
    For now, I'll use details/summary for zero-dep simplicity or just wait. 

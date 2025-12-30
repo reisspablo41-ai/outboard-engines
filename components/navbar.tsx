@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { Menu, Search, User } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -21,6 +22,7 @@ const navItems = [
 ]
 
 export function Navbar() {
+    const router = useRouter()
     const [isScrolled, setIsScrolled] = React.useState(false)
 
     React.useEffect(() => {
@@ -103,11 +105,20 @@ export function Navbar() {
                 <div className="flex items-center gap-2 md:gap-4">
                     <div className="hidden md:flex relative w-64">
                         <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                        <Input
-                            type="search"
-                            placeholder="Search parts, boats..."
-                            className="pl-9 h-9 bg-secondary/50 border-transparent focus:bg-background transition-all rounded-full"
-                        />
+                        <form onSubmit={(e) => {
+                            e.preventDefault();
+                            const query = (e.currentTarget.elements.namedItem('search') as HTMLInputElement).value;
+                            if (query) {
+                                router.push(`/search?make=${encodeURIComponent(query)}`);
+                            }
+                        }}>
+                            <Input
+                                type="search"
+                                name="search"
+                                placeholder="Search parts, boats..."
+                                className="pl-9 h-9 bg-secondary/50 border-transparent focus:bg-background transition-all rounded-full"
+                            />
+                        </form>
                     </div>
 
                     <Button variant="ghost" size="icon" className="md:hidden">
@@ -120,8 +131,8 @@ export function Navbar() {
                         </Button>
                     </Link>
 
-                    {/* Cart Sheet Integration */}
-                    <CartSheet />
+                    {/* Cart Removed as per request */}
+                    {/* <CartSheet /> */}
                 </div>
             </div>
         </header>

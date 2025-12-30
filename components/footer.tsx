@@ -57,9 +57,9 @@ export function Footer() {
                     <div className="space-y-4">
                         <h3 className="font-semibold text-lg tracking-tight">Contact</h3>
                         <ul className="space-y-2 text-sm text-primary-foreground/70">
-                            <li>1-800-OUTBOARD</li>
-                            <li>sales@outboards.com</li>
-                            <li>123 Marine Way, Miami FL 33100</li>
+                            <li>+1 (773) 349-6758</li>
+                            <li>outboards2025@gmail.com</li>
+                            <li>333 Kennedy St, Oakland, CA 94606</li>
                             <li className="pt-2">
                                 <span className="block text-xs uppercase tracking-wider text-primary-foreground/50 mb-1">Hours</span>
                                 Mon - Fri: 8am - 6pm EST<br />

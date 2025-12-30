@@ -1,10 +1,20 @@
 import { FilterSidebar } from "@/components/filter-sidebar"
 import { ProductCard } from "@/components/product-card"
 import { Button } from "@/components/ui/button"
-import { getProducts } from "@/lib/api/products"
+import { searchProducts } from "@/lib/api/products"
 
-export default async function BoatsPage() {
-    const boats = await getProducts('boat')
+export default async function BoatsPage({ searchParams }: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
+    const resolvedParams = await searchParams
+
+    // Parse filters
+    const filters = {
+        type: 'boat',
+        make: resolvedParams.make as string,
+        minPrice: resolvedParams.minPrice ? Number(resolvedParams.minPrice) : undefined,
+        maxPrice: resolvedParams.maxPrice ? Number(resolvedParams.maxPrice) : undefined
+    }
+
+    const boats = await searchProducts(filters)
 
     return (
         <div className="container mx-auto px-4 py-8">
