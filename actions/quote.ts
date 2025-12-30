@@ -19,7 +19,7 @@ export async function submitQuoteRequest(prevState: any, formData: FormData) {
     try {
         // 1. Send Email to Admin
         const adminResponse = await resend.emails.send({
-            from: 'Outboards Quotes <onboarding@resend.dev>',
+            from: 'Outboards Quotes <support@boatsoutboardmotorsandpartsforsale.com>',
             to: ['support@boatsoutboardmotorsandpartsforsale.com'],
             subject: `New Quote Request: ${productName}`,
             text: `
@@ -50,7 +50,7 @@ ${message || 'No additional message.'}
 
         // 2. Send Confirmation to User
         const userResponse = await resend.emails.send({
-            from: 'Outboards Sales <onboarding@resend.dev>',
+            from: 'Outboards Sales <support@boatsoutboardmotorsandpartsforsale.com>',
             to: [email],
             subject: `Quote Request Received: ${productName}`,
             text: `

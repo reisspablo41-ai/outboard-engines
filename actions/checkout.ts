@@ -80,7 +80,7 @@ export async function processCheckout(items: CartItem[], userDetails: UserDetail
 
         // 3. Send Admin Email
         await resend.emails.send({
-            from: 'Outboards Orders <onboarding@resend.dev>',
+            from: 'Outboards Orders <support@boatsoutboardmotorsandpartsforsale.com>',
             to: ['support@boatsoutboardmotorsandpartsforsale.com'],
             subject: `New Order Received: #${orderId.slice(0, 8)}`,
             text: `
@@ -100,7 +100,7 @@ ${userDetails.address}
 
         // 4. Send User Confirmation Email
         await resend.emails.send({
-            from: 'Outboards Sales <onboarding@resend.dev>',
+            from: 'Outboards Sales <support@boatsoutboardmotorsandpartsforsale.com>',
             to: [userDetails.email],
             subject: `Order Confirmation #${orderId.slice(0, 8)}`,
             text: `

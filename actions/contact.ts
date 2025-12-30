@@ -15,7 +15,7 @@ export async function submitContactForm(prevState: any, formData: FormData) {
 
     try {
         const { data, error } = await resend.emails.send({
-            from: 'Outboards Support <onboarding@resend.dev>', // Use verified domain later
+            from: 'Outboards Support <support@boatsoutboardmotorsandpartsforsale.com>',
             to: ['support@boatsoutboardmotorsandpartsforsale.com'],
             subject: `New Contact Form: ${firstName} ${lastName}`,
             text: `
