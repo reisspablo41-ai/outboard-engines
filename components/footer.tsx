@@ -58,7 +58,7 @@ export function Footer() {
                         <h3 className="font-semibold text-lg tracking-tight">Contact</h3>
                         <ul className="space-y-2 text-sm text-primary-foreground/70">
                             <li>+1 (773) 349-6758</li>
-                            <li>outboards2025@gmail.com</li>
+                            <li>support@boatsoutboardmotorsandpartsforsale.com</li>
                             <li>333 Kennedy St, Oakland, CA 94606</li>
                             <li className="pt-2">
                                 <span className="block text-xs uppercase tracking-wider text-primary-foreground/50 mb-1">Hours</span>
